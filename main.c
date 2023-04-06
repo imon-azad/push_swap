@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:54:02 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/04/06 17:56:03 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:28:23 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void print_num(int *n, int len)
 	}
 	
 }
+
 int check_num(char *s)
 {
 	int i;
@@ -53,15 +54,16 @@ int *check(int argc, char **argv)
 	while (i < argc)
 		{
 			s = ft_split(argv[i], ' ');
-			while (s[j] != '\0')
+			while (s[j] != NULL)
 			{
 				if(check_num(s[j]) == 0)	
 				{
 					num[k] = atoi(s[j]);
+					free(s[j]);
 					len++;
 					k++;
 					j++;
-					free(s[j]);
+					
 				}
 				else
 				{
@@ -82,13 +84,10 @@ void	leaksssss(void)
 {
 	system ("leaks -q a.out");
 }
+
 int	main(int argc, char **argv)
 {
-	atexit(leaksssss);
-	int len = 0;
-	int i = 0;
-	int j = 0;
-	int k = 1;
+	//atexit(leaksssss);
 	int *a;
 	
 	if (argc < 2)
