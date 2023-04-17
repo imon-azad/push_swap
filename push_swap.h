@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 18:12:07 by imonazad          #+#    #+#             */
-/*   Updated: 2023/04/11 02:50:34 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/04/15 14:57:51 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,24 @@ typedef struct s_stack
 {
     int		*a_stack;
     int		*b_stack;
+    int     *cpy_stack;
     int     a_len;
     int     b_len;
     int     min_a;
     int     max_a;
     int     min_b;
     int     max_b;
+    int     print;
+    int     tmp;
+    
+    int     arguments;
+    int     cont;
+    int     percentage;
+    int     len_max;
+    int     size_block;
+    int     lsp;
+    int     control;
+    int     len_original;
     
     
 } t_stack;
