@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:54:02 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/04/17 15:35:01 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/04/17 19:22:38 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -505,7 +505,7 @@ t_stack *rrr(t_stack *lst)
 void len_three(t_stack *lst)
 {
 	if (lst->a_stack[0] < lst->a_stack[1] && lst->a_stack[1] > lst->a_stack[2] && lst->a_stack[0] < lst->a_stack[2])
-	{
+	{	
 		rra(lst);
 		sa(lst);
 	}
@@ -564,16 +564,6 @@ void copy_stack(t_stack *lst)
 	}
 }
 
-/* void change_stack(t_stack *lst)
-{
-	int i;
-	int range;
-
-	copy_stack(lst);
-	
-	
-} */
-
 void transform_array(t_stack *lst) 
 {
 	
@@ -581,7 +571,6 @@ void transform_array(t_stack *lst)
 	int j;
 	int min;
 	
-    //int* copy_arr = (int*)malloc(lst->a_len * sizeof(int));
     j = 0;
     i = 0;
     while (i < lst->a_len)
@@ -597,11 +586,7 @@ void transform_array(t_stack *lst)
 		ft_swap(&lst->cpy_stack[i], &lst->cpy_stack[min]);
         i++;
     }
-/* 	printf("\n--\n");
-	print_num(copy_arr, lst->a_len);
-	printf("\n--\n");
-	print_num(lst->cpy_stack, lst->a_len);
-	printf("\n--\n"); */
+
     i = 0;
     while (i < lst->a_len) {
         j = 0;
@@ -615,7 +600,6 @@ void transform_array(t_stack *lst)
         }
         i++;
     }
-    //free(copy_arr);
 }
 
 
@@ -719,11 +703,11 @@ void ordernums_sb(t_stack *lst)
 }
 
 
-void ordernums_100(t_stack *lst)
+void ordernums(t_stack *lst)
 {
-	lst->arguments = (lst->len_max / lst->cont) * (lst->percentage);
+	lst->arguments = (lst->len_original / lst->cont) * (lst->percentage);
 	
-	/* printf("arguments: %i \n",lst->arguments );
+	printf("arguments: %i \n",lst->arguments );
 	printf("percentage: %i \n",lst->percentage );
 	printf("argc: %i \n",lst->a_len );
 	printf("cont: %i \n",lst->cont );
@@ -731,10 +715,10 @@ void ordernums_100(t_stack *lst)
 	printf("sia: %i \n",lst->a_len );
 	printf("lsp: %i \n",lst->lsp );
 	printf("control: %i \n",lst->control );
-	printf("size_block: %i \n",lst->size_block ); */
+	printf("size_block: %i \n",lst->size_block );
 	
 	if (lst->percentage == lst->cont)
-		lst->arguments = lst->len_max - 3;
+		lst->arguments = lst->len_original - 3;
 	
 	while (lst->b_len < lst->arguments && lst->percentage <= lst->cont)
 	{
@@ -753,16 +737,16 @@ void ordernums_100(t_stack *lst)
 		len_three(lst);
 		lst->lsp = lst->lsp - 3;
 	}
-	print_num(lst->a_stack, lst->a_len);
+/* 	print_num(lst->a_stack, lst->a_len);
 	printf("\n----\n");
 	print_num(lst->b_stack, lst->b_len);
 	printf("\n-------------\n");
 	printf("lsp: %i \n",lst->lsp );
 	printf("percentage: %i \n",lst->percentage );
 	printf("cont: %i \n",lst->cont );
-	printf("arguments: %i \n",lst->arguments ); 
+	printf("arguments: %i \n",lst->arguments );  */
 	if(lst->percentage <= lst->cont)
-		ordernums_100(lst);
+		ordernums(lst);
 	while (lst->percentage-- > 0)
 		ordernums_sb(lst);
 		
@@ -781,23 +765,21 @@ void init_op(t_stack *lst)
 	{
 	lst->cont = 4;
 	lst->percentage = 1;
-	lst->len_max = lst->a_len;
 	lst->len_original = lst->a_len;
 	lst->lsp = lst->a_len - 1;
-	lst->size_block = (lst->a_len / lst->cont) / 2;
+	lst->size_block = (lst->len_original / lst->cont) / 2;
 	lst->control = 0;
-	ordernums_100(lst);
+	ordernums(lst);
 	}
 	if (lst->a_len >= 100)
 	{
 	lst->cont = 8;
 	lst->percentage = 1;
-	lst->len_max = lst->a_len;
 	lst->len_original = lst->a_len;
 	lst->lsp = lst->a_len - 1;
 	lst->size_block = (lst->a_len / lst->cont) / 2;
 	lst->control = 0;
-	ordernums_100(lst);
+	ordernums(lst);
 	}
 
 }
@@ -860,20 +842,20 @@ int	main(int argc, char **argv)
 	}
 
 	init_var(&lst, a, len);
-	
+	copy_stack(&lst);
+	transform_array(&lst);
+	init_op(&lst);
 	
 	
 	/* printf("---lista ordenada---\n");
 	print_num(lst.a_stack, len); */
 	//printf("\n------\n");
-	copy_stack(&lst);
-	transform_array(&lst);
-	init_op(&lst);
 	
-	/* printf("\n---lista posiciones s_a---\n");
+	
+	printf("---lista posiciones s_a---\n");
 	print_num(lst.a_stack, len);
 	
-	printf("\n---lista solucion esperada cpy_s---\n");
+	/* printf("\n---lista solucion esperada cpy_s---\n");
 	print_num(lst.cpy_stack, len); */
 	
 	free(lst.a_stack);
