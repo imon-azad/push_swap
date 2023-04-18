@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:54:02 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/04/17 19:22:38 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/04/18 02:05:42 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -602,27 +602,46 @@ void transform_array(t_stack *lst)
     }
 }
 
-
-void	calc(t_stack *lst)
+int up_down(t_stack *lst)
 {
-	if (lst->b_stack[0] == lst->lsp - 1)
+	int	i;
+
+	i = 0;
+	while (i < lst->b_len)
+	{
+		if (lst->b_stack[i] == lst->to_find)
+		{
+			if ((lst->b_len / 2) - i > 0)
+				return (0);
+			else
+				return (1);
+		}		
+		i++;
+	}
+	return (-1);
+}
+
+
+void	ordernums_up(t_stack *lst)
+{
+	if (lst->b_stack[0] == lst->to_find - 1 && lst->control == 0)
 	{
 		pa(lst);
 		lst->control = 1;
 	}
-	if (lst->b_stack[0] == lst->lsp)
+	if (lst->b_stack[0] == lst->to_find)
 	{
 		pa(lst);
-		lst->lsp--;
+		lst->to_find--;
 		if (lst->control == 1)
 		{
-			lst->lsp--;
+			lst->to_find--;
 			lst->control = 0;
 			sa(lst);
 		}
 		if (lst->control == 2)
 		{
-			lst->lsp = lst->lsp - 2;
+			lst->to_find = lst->to_find - 2;
 			lst->control = 0;
 			sa(lst);
 			rra(lst);
@@ -633,43 +652,26 @@ void	calc(t_stack *lst)
 	
 }
 
-int	check_mov(t_stack *lst)
+void	ordernums_down(t_stack *lst)
 {
-	int	i;
-
-	i = 0;
-	while (i <= lst->b_len - 1)
-	{
-		if (lst->b_stack[i] == lst->lsp)
-			break ;
-		i++;
-	}
-	if ((lst->b_len / 2) - i >= 0)
-		return (0);
-	else
-		return (-1);
-}
-
-void	ordernums_sb_rotate(t_stack *lst)
-{
-	if(lst->b_stack[0] == lst->lsp - 2 && lst->control == 1)
+	if(lst->b_stack[0] == lst->to_find - 2 && lst->control == 1)
 	{	
 		pa(lst);
 		ra(lst);
 		lst->control = 2;
 	}
-	if (lst->b_stack[0] == lst->lsp - 1) 
+	if (lst->b_stack[0] == lst->to_find - 1) 
 	{
 		pa(lst);
 		lst->control = 1;
 	}
-	if (lst->b_stack[0] == lst->lsp)
+	if (lst->b_stack[0] == lst->to_find)
 	{
 		pa(lst);
-		lst->lsp--;
+		lst->to_find--;
 		 if (lst->control == 1)
 		{
-			lst->lsp--;
+			lst->to_find--;
 			lst->control = 0;
 			sa(lst);
 		} 
@@ -683,21 +685,21 @@ void ordernums_sb(t_stack *lst)
 {
 	while (lst->a_len < lst->len_original)
 	{
-		if (lst->b_stack[0] == lst->lsp && lst->control == 0)
+		if (lst->b_stack[0] == lst->to_find && lst->control == 0)
 		{
 			pa(lst);
-			lst->lsp--;
+			lst->to_find--;
 		}
-		if (lst->b_stack[0] == lst->lsp -2 && lst->control == 1)
+		if (lst->b_stack[0] == lst->to_find -2 && lst->control == 1)
 		{
 			pa(lst);
 			ra(lst);
 			lst->control = 2;
 		}
-		if (check_mov(lst) == -1)
-			ordernums_sb_rotate(lst);
+		if (up_down(lst) == 1)
+			ordernums_down(lst);
 		else
-			calc(lst);
+			ordernums_up(lst);
 	}
 	
 }
@@ -705,49 +707,49 @@ void ordernums_sb(t_stack *lst)
 
 void ordernums(t_stack *lst)
 {
-	lst->arguments = (lst->len_original / lst->cont) * (lst->percentage);
+	lst->limit_num = (lst->len_original / lst->cont) * (lst->i);
 	
-	printf("arguments: %i \n",lst->arguments );
-	printf("percentage: %i \n",lst->percentage );
-	printf("argc: %i \n",lst->a_len );
+	/* printf("limit_num: %i \n",lst->limit_num );
+	printf("i: %i \n",lst->i );
+	printf("original len: %i \n",lst->len_original );
 	printf("cont: %i \n",lst->cont );
 	printf("sib: %i \n",lst->b_len );
 	printf("sia: %i \n",lst->a_len );
-	printf("lsp: %i \n",lst->lsp );
+	printf("to_find: %i \n",lst->to_find );
 	printf("control: %i \n",lst->control );
-	printf("size_block: %i \n",lst->size_block );
+	printf("size_block: %i \n",lst->size_block );  */
 	
-	if (lst->percentage == lst->cont)
-		lst->arguments = lst->len_original - 3;
+	if (lst->i == lst->cont)
+		lst->limit_num = lst->len_original - 3;
 	
-	while (lst->b_len < lst->arguments && lst->percentage <= lst->cont)
+	while (lst->b_len < lst->limit_num && lst->i <= lst->cont)
 	{
-		if (lst->a_stack[0] < lst->arguments)
+		if (lst->a_stack[0] < lst->limit_num)
 		{
 			pb(lst);
-			if(lst->b_stack[0] > lst->arguments - lst->size_block && lst->b_len > 1)
-				rb(lst);
+			if(lst->b_stack[0] > (lst->limit_num - lst->size_block) && lst->b_len > 1)
+				rb(lst); 
 		}
 		else	
 			ra(lst);
 	}
-	lst->percentage++;
+	lst->i++;
 	if (lst->a_len == 3)
 	{
 		len_three(lst);
-		lst->lsp = lst->lsp - 3;
+		lst->to_find = lst->to_find - 3;
 	}
 /* 	print_num(lst->a_stack, lst->a_len);
 	printf("\n----\n");
 	print_num(lst->b_stack, lst->b_len);
 	printf("\n-------------\n");
-	printf("lsp: %i \n",lst->lsp );
-	printf("percentage: %i \n",lst->percentage );
+	printf("to_find: %i \n",lst->to_find );
+	printf("i: %i \n",lst->i );
 	printf("cont: %i \n",lst->cont );
-	printf("arguments: %i \n",lst->arguments );  */
-	if(lst->percentage <= lst->cont)
-		ordernums(lst);
-	while (lst->percentage-- > 0)
+	printf("limit_num: %i \n",lst->limit_num );  */
+	if(lst->i <= lst->cont)
+		ordernums(lst); 
+	while (lst->i-- > 0)
 		ordernums_sb(lst);
 		
 }
@@ -759,25 +761,25 @@ void init_op(t_stack *lst)
 		ra(lst);
 	if (lst->a_len == 3)
 		len_three(lst);
-	if (lst->a_len > 3 && lst->a_len < 10)
+	if (lst->a_len > 3 && lst->a_len <= 15)
 		len_four_to_nine(lst);
-	if (lst->a_len >= 10 && lst->a_len < 100)
+	if (lst->a_len > 15 && lst->a_len <= 150)
 	{
-	lst->cont = 4;
-	lst->percentage = 1;
+	lst->cont = 5;
+	lst->i = 1;
 	lst->len_original = lst->a_len;
-	lst->lsp = lst->a_len - 1;
+	lst->to_find = lst->len_original - 1;
 	lst->size_block = (lst->len_original / lst->cont) / 2;
 	lst->control = 0;
 	ordernums(lst);
 	}
-	if (lst->a_len >= 100)
+	if (lst->a_len > 150)
 	{
 	lst->cont = 8;
-	lst->percentage = 1;
+	lst->i = 1;
 	lst->len_original = lst->a_len;
-	lst->lsp = lst->a_len - 1;
-	lst->size_block = (lst->a_len / lst->cont) / 2;
+	lst->to_find = lst->len_original - 1;
+	lst->size_block = (lst->len_original / lst->cont) / 2;
 	lst->control = 0;
 	ordernums(lst);
 	}
@@ -852,9 +854,9 @@ int	main(int argc, char **argv)
 	//printf("\n------\n");
 	
 	
-	printf("---lista posiciones s_a---\n");
-	print_num(lst.a_stack, len);
-	
+	/* printf("---lista posiciones s_a---\n");
+	print_num(lst.a_stack, len); */
+	 
 	/* printf("\n---lista solucion esperada cpy_s---\n");
 	print_num(lst.cpy_stack, len); */
 	

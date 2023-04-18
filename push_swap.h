@@ -6,7 +6,7 @@
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 18:12:07 by imonazad          #+#    #+#             */
-/*   Updated: 2023/04/17 17:46:04 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/04/18 01:35:08 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ typedef struct s_stack
     int     print;
     int     tmp;
     
-    int     arguments;
+    int     limit_num;
     int     cont;
-    int     percentage;
+    int     i;
     int     size_block;
-    int     lsp;
+    int     to_find;
     int     control;
     int     len_original;
     
