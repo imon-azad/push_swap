@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 20:22:53 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/02/04 04:30:01 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/04/18 23:53:35 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
 int	ft_atoi(const char *str)
 {

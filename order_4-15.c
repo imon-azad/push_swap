@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   order_4-15.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 03:47:30 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/01/26 17:28:54 by esamad-j         ###   ########.fr       */
+/*   Created: 2023/04/18 05:23:33 by esamad-j          #+#    #+#             */
+/*   Updated: 2023/04/18 05:24:17 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-int	ft_toupper(int c)
+void	len_four_to_fifteen(t_stack *lst)
 {
-	if (c >= 'a' && c <= 'z')
-		c = c - 32;
-	return (c);
+	int	i;
+
+	while (lst->a_len > 3)
+	{
+		i = 0;
+		lst->min_a = num_min_a(lst);
+		if (lst->a_stack[i] == lst->min_a)
+			pb(lst);
+		else
+		{
+			while (lst->a_stack[i] != lst->min_a && i < lst->a_len)
+				i++;
+			if (i <= (lst->a_len / 2))
+				ra(lst);
+			else
+				rra(lst);
+		}
+	}
+	len_three(lst);
+	while (lst->b_len != 0)
+		pa(lst);
 }
-/* int	main(void)
-{
-	int a;
-	a = 'a';
-	a = ft_toupper(a);
-	printf("%c", a);
-	return (0);
-} */

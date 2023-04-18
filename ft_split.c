@@ -6,11 +6,11 @@
 /*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:13:37 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/03/29 17:58:19 by esamad-j         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:52:37 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
 static int	words_numbers(char const *s, char c)
 {

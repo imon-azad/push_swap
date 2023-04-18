@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   pa_pb.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esamad-j <esamad-j@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: esamad-j <esamad-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/30 04:37:14 by esamad-j          #+#    #+#             */
-/*   Updated: 2023/01/30 04:41:13 by esamad-j         ###   ########.fr       */
+/*   Created: 2023/04/18 04:03:28 by esamad-j          #+#    #+#             */
+/*   Updated: 2023/04/18 04:04:01 by esamad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	ft_putstr_fd(char *s, int fd)
+t_stack	*pa(t_stack *lst)
 {
-	while (*s != '\0')
-	{
-		write(fd, s, 1);
-		s++;
-	}
+	remove_b(lst);
+	add_a(lst);
+	write(1, "pa\n", 3);
+	return (lst);
+}
+
+t_stack	*pb(t_stack *lst)
+{
+	remove_a(lst);
+	add_b(lst);
+	write(1, "pb\n", 3);
+	return (lst);
 }
